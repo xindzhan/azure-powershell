@@ -23,6 +23,7 @@ namespace Microsoft.WindowsAzure.Commands.Common
         static MetricHelper()
         {            
             TelemetryClient = new TelemetryClient();
+            //TODO enable in final PR if ip collection is not allowed
             //TelemetryClient.Context.Location.Ip = "0.0.0.0";
 
             if (!IsMetricTermAccepted())
@@ -32,7 +33,7 @@ namespace Microsoft.WindowsAzure.Commands.Common
 
             if (TestMockSupport.RunningMocked)
             {
-                //TODO enable in final cr
+                //TODO enable in final PR
                 //TelemetryConfiguration.Active.DisableTelemetry = true;
             }
         }
@@ -45,7 +46,6 @@ namespace Microsoft.WindowsAzure.Commands.Common
             }
 
             var tcEvent = new EventTelemetry("CmdletUsage");
-            //tcEvent.Context.Location.Ip = "0.0.0.0";
             tcEvent.Context.User.Id = qos.UID;
             tcEvent.Context.User.UserAgent = AzurePowerShell.UserAgentValue.ToString();
             tcEvent.Properties.Add("CmdletType", qos.CmdletType);
@@ -78,7 +78,7 @@ namespace Microsoft.WindowsAzure.Commands.Common
 
         public static bool IsMetricTermAccepted()
         {
-            //TODO check the config/preference
+            //TODO implement the check for user config/preference
             return true;
         }
 
